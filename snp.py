@@ -68,12 +68,13 @@ def compile_data():
         else:
             main_df = pd.merge(main_df, df, on='Date', how='outer')
 
+        if count % 10 == 0:
+            print(count , '/' , str(len(tickers)))
 
-
-        print(main_df.tail().to_string())
         main_df.to_csv('sp500_joined_closes.csv')
 
 
 compile_data()
+print("Done")
 #get_data_from_yahoo()
 #save_sp500_tickers()
