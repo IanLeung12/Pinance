@@ -17,6 +17,7 @@ end = dt.datetime(2024,12,31)
 df = yf.download("NVDA",start, end)
 print(df)
 
+
 df_ohlc = df["Adj Close"].resample("10D").ohlc()
 df_volume = df["Volume"].resample("10D").sum()
 df_ohlc["volume"] = df_volume

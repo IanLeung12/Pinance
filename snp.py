@@ -57,22 +57,22 @@ def compile_data():
     main_df = pd.DataFrame()
 
     for count,ticker in enumerate(tickers):
-        df = pd.read_csv('stock_dfs/{}.csv'.format(ticker))
-        df = df[['Date', 'Adj Close']].copy()
-        df.set_index('Date', inplace=True)
-
+        df = pd.read_csv('stock_dfs/{}.csv'.format(ticker),
+                         names=['Date', 'Adj Close', 'Close', 'High', 'Low', 'Open', 'Volume'])
+        df.set_index('Date', inplace=True, drop=False)
+        df = df[['Adj Close']].copy()
         df.rename(columns = {'Adj Close': ticker}, inplace=True)
 
         if main_df.empty:
             main_df = df
         else:
-            main_df = main_df.join(df, how='outer')
+            main_df = pd.merge(main_df, df, on='Date', how='outer')
 
-        if count%10 == 0:
-            print(count)
 
-        print(main_df.head())
+
+        print(main_df.tail().to_string())
         main_df.to_csv('sp500_joined_closes.csv')
+
 
 compile_data()
 #get_data_from_yahoo()
