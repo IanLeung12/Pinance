@@ -15,6 +15,7 @@ def save_sp500_tickers():
         # Find all <td> elements (table columns)
         columns = row.findAll('td')
 
+
         # Check if the row has at least one <td> element
         if len(columns) > 0:
             ticker = columns[1].text.strip() # Get the ticker symbol, remove extra spaces
@@ -57,8 +58,9 @@ def compile_data():
     main_df = pd.DataFrame()
 
     for count,ticker in enumerate(tickers):
-        df = pd.read_csv('stock_dfs/{}.csv'.format(ticker),
-                         names=['Date', 'Adj Close', 'Close', 'High', 'Low', 'Open', 'Volume'])
+        df = pd.read_csv('stock_dfs/{}.csv'.format(ticker))
+        df.drop(index={0,1}, inplace=True)
+        df.rename(columns={"Price":"Date"}, inplace=True)
         df.set_index('Date', inplace=True, drop=False)
         df = df[['Adj Close']].copy()
         df.rename(columns = {'Adj Close': ticker}, inplace=True)
@@ -68,10 +70,11 @@ def compile_data():
         else:
             main_df = pd.merge(main_df, df, on='Date', how='outer')
 
+        print(main_df)
         if count % 10 == 0:
             print(count , '/' , str(len(tickers)))
 
-        main_df.to_csv('sp500_joined_closes.csv')
+    main_df.to_csv('sp500_joined_closes.csv')
 
 
 compile_data()
