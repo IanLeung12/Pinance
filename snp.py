@@ -5,6 +5,11 @@ import os
 import pandas as pd
 import yfinance as web
 import datetime as dt
+import matplotlib.pyplot as plt
+from matplotlib import style
+import mplfinance as mpf
+
+style.use("ggplot")
 
 def save_sp500_tickers():
     resp = requests.get('https://en.wikipedia.org/wiki/List_of_S%26P_500_companies')
@@ -76,8 +81,13 @@ def compile_data():
 
     main_df.to_csv('sp500_joined_closes.csv')
 
+def graph_data():
+    df = pd.read_csv('sp500_joined_closes.csv')
 
-compile_data()
+
+
+
+#compile_data()
 print("Done")
 #get_data_from_yahoo()
 #save_sp500_tickers()
