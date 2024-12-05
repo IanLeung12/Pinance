@@ -8,6 +8,7 @@ import datetime as dt
 import matplotlib.pyplot as plt
 from matplotlib import style
 import mplfinance as mpf
+import matplotlib
 
 style.use("ggplot")
 
@@ -84,9 +85,18 @@ def compile_data():
 def graph_data():
     df = pd.read_csv('sp500_joined_closes.csv')
 
+    for ticker in df.columns:
+        plt.plot(df[ticker], label=ticker)
+
+    plt.xlabel('Date')
+    plt.ylabel('Adj Close')
+    plt.title('Adjusted closes of the S&P 500')
+    plt.show()
 
 
 
+
+graph_data()
 #compile_data()
 print("Done")
 #get_data_from_yahoo()
