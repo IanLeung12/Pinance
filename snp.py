@@ -83,11 +83,10 @@ def compile_data():
 
 def graph_data():
     df = pd.read_csv('sp500_joined_closes.csv')
-    df = pd.read_csv('sp500_joined_closes.csv')
     print(df.tail())
     for ticker in df.columns:
         if ticker != 'Date':
-            df[ticker].plot()
+            df[ticker].plot(x='Date', y=ticker, label=ticker, title='Adjusted Closes of the S&P 500')
 
     plt.show()
 
