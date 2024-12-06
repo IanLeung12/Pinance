@@ -14,6 +14,7 @@ import matplotlib
 style.use("ggplot")
 
 def save_sp500_tickers():
+    #beatufiul sup
     resp = requests.get('https://en.wikipedia.org/wiki/List_of_S%26P_500_companies')
     soup = bs.BeautifulSoup(resp.text,'html.parser')
     table = soup.find('table', {'class':'wikitable sortable'})
