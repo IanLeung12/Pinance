@@ -5,6 +5,12 @@ import os
 import pandas as pd
 import yfinance as web
 import datetime as dt
+import matplotlib.pyplot as plt
+from matplotlib import style
+import mplfinance as mpf
+import matplotlib
+
+style.use("ggplot")
 
 def save_sp500_tickers():
     resp = requests.get('https://en.wikipedia.org/wiki/List_of_S%26P_500_companies')
@@ -14,6 +20,7 @@ def save_sp500_tickers():
     for row in table.findAll('tr')[1:]:  # Skip the header row
         # Find all <td> elements (table columns)
         columns = row.findAll('td')
+
 
         # Check if the row has at least one <td> element
         if len(columns) > 0:
@@ -57,8 +64,9 @@ def compile_data():
     main_df = pd.DataFrame()
 
     for count,ticker in enumerate(tickers):
-        df = pd.read_csv('stock_dfs/{}.csv'.format(ticker),
-                         names=['Date', 'Adj Close', 'Close', 'High', 'Low', 'Open', 'Volume'])
+        df = pd.read_csv('stock_dfs/{}.csv'.format(ticker))
+        df.drop(index={0,1}, inplace=True)
+        df.rename(columns={"Price":"Date"}, inplace=True)
         df.set_index('Date', inplace=True, drop=False)
         df = df[['Adj Close']].copy()
         df.rename(columns = {'Adj Close': ticker}, inplace=True)
@@ -71,10 +79,24 @@ def compile_data():
         if count % 10 == 0:
             print(count , '/' , str(len(tickers)))
 
-        main_df.to_csv('sp500_joined_closes.csv')
+    print(main_df.head())
+    main_df.to_csv('sp500_joined_closes.csv')
+
+def graph_data():
+    df = pd.read_csv('sp500_joined_closes.csv')
+    print(df.tail())
+    for ticker in df.columns:
+        if ticker != 'Date':
+            df[ticker].plot()
+    #df['AMTM'].plot(x='Date', y='AMTM', figsize=(20,10), legend=True)
+    plt.show()
 
 
-compile_data()
+
+
+
+graph_data()
+#compile_data()
 print("Done")
 #get_data_from_yahoo()
 #save_sp500_tickers()
