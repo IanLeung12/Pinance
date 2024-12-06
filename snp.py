@@ -76,7 +76,6 @@ def compile_data():
         else:
             main_df = pd.merge(main_df, df, on='Date', how='outer')
 
-        print(main_df)
         if count % 10 == 0:
             print(count , '/' , str(len(tickers)))
 
@@ -84,13 +83,12 @@ def compile_data():
 
 def graph_data():
     df = pd.read_csv('sp500_joined_closes.csv')
-
+    df = pd.read_csv('sp500_joined_closes.csv')
+    print(df.tail())
     for ticker in df.columns:
-        plt.plot(df[ticker], label=ticker)
+        if ticker != 'Date':
+            df[ticker].plot()
 
-    plt.xlabel('Date')
-    plt.ylabel('Adj Close')
-    plt.title('Adjusted closes of the S&P 500')
     plt.show()
 
 
