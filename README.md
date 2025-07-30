@@ -1,5 +1,7 @@
 Financial analysis with the help of key python libraries ranging from matplotlib, numpy, pandas and scikit-learn.
 
+I will finish this at some point trust 
+
 Plotting correlation data of S&P 500
 
 ![image](https://github.com/user-attachments/assets/5f2ab51b-1cc5-43bd-aebb-75b94fac3286)
