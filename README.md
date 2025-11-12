@@ -10,4 +10,4 @@ Graphing of the S&P 500
 
 ![image](https://github.com/user-attachments/assets/22379a8d-5caf-45a8-89a6-ca733bbd3abb)
 
-WIP
+Scrapped because I do similar things in my University Program
